@@ -3,9 +3,8 @@ import { Visibility, VisibilityOff } from '@mui/icons-material';
 import { Button, IconButton, InputAdornment, OutlinedInput, TextField } from '@mui/material';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
-import '@/app/globals.css';
 
-const LoginForm: React.FC = () => {
+export default function LoginForm() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = React.useState(false);
@@ -63,7 +62,5 @@ const LoginForm: React.FC = () => {
     </div>
   );
 };
-
-export default LoginForm;
 
 
