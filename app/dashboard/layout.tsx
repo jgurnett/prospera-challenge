@@ -16,8 +16,17 @@ import MailIcon from '@mui/icons-material/Mail'
 import MenuIcon from '@mui/icons-material/Menu'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
+import { DashboardRoutes } from '@/enums/routes'
+import MovieCreationIcon from '@mui/icons-material/MovieCreation'
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
 
 const drawerWidth = 240
+
+interface SidebarInfo {
+  name: string
+  link: string
+  icon: JSX.Element
+}
 
 export default function ResponsiveDrawer({
   children,
@@ -30,18 +39,29 @@ export default function ResponsiveDrawer({
     setMobileOpen(!mobileOpen)
   }
 
+  const sidebarList: SidebarInfo[] = [
+    {
+      name: 'New Review',
+      link: `/${DashboardRoutes.DASHBOARD}/${DashboardRoutes.FORM}`,
+      icon: <AddCircleOutlineIcon />,
+    },
+    {
+      name: 'Reviews',
+      link: `/${DashboardRoutes.DASHBOARD}/${DashboardRoutes.REVIEWS}`,
+      icon: <MovieCreationIcon />,
+    },
+  ]
+
   const drawer = (
     <div>
       <Toolbar />
       <Divider />
       <List>
-        {['Form', 'Submissions'].map((text, index) => (
-          <ListItem key={text} disablePadding>
-            <ListItemButton>
-              <ListItemIcon>
-                {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-              </ListItemIcon>
-              <ListItemText primary={text} />
+        {sidebarList.map((sidebarInfo) => (
+          <ListItem key={sidebarInfo.name} disablePadding>
+            <ListItemButton href={sidebarInfo.link}>
+              <ListItemIcon>{sidebarInfo.icon}</ListItemIcon>
+              <ListItemText primary={sidebarInfo.name} />
             </ListItemButton>
           </ListItem>
         ))}

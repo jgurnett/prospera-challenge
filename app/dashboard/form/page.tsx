@@ -1,15 +1,18 @@
 'use client'
 import { DashboardRoutes } from '@/enums/routes'
-import Link from 'next/link'
+import { Button } from '@mui/material'
 
 export default function Form() {
   return (
     <div>
-      Lets start the form!
+      <p>Lets add a movie review</p>
       <br />
-      <Link href={DashboardRoutes.FORM + '/' + DashboardRoutes.STEP1}>
-        Next
-      </Link>
+      <Button
+        variant="contained"
+        href={DashboardRoutes.FORM + '/' + DashboardRoutes.STEP1}
+      >
+        Start review!
+      </Button>
     </div>
   )
 }
