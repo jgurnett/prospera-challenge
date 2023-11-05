@@ -1,15 +1,14 @@
-import Navigation from "./formNavigation"
+import Navigation from './formNavigation'
 
 export default function FormLayout({
-  children
+  children,
 }: {
-        children: React.ReactNode
+  children: React.ReactNode
 }) {
   return (
-        <section className="flex flex-col items-center">
-          <Navigation />
-          {children}
-        
+    <section className="flex flex-col items-center">
+      <Navigation />
+      {children}
     </section>
   )
 }
