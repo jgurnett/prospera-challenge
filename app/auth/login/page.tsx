@@ -1,6 +1,6 @@
 import LoginForm from '@/components/loginForm';
 
-const LoginPage: React.FC = () => {
+export default function LoginPage() {
   return (
     <div>
       <h1>Sign in</h1>
@@ -8,6 +8,3 @@ const LoginPage: React.FC = () => {
     </div>
   );
 };
-
-
-export default LoginPage;
