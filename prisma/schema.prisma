@@ -17,4 +17,21 @@ model users {
   email     String   @unique
   image     String
   createdAt DateTime @default(now())
+  reviews review[]
+}
+
+model review {
+  id      Int      @id @default(autoincrement())
+  movieName    String
+  rating  Int
+  review  String
+  dateWatched    DateTime
+  createdTs DateTime  @default(now()) 
+  updatedTs DateTime? @updatedAt
+
+  // Define a relation to the User table
+  userId  Int
+  user    users     @relation(fields: [userId], references: [id])
+
+  @@unique([movieName, dateWatched]) // Unique constraint on name and date columns
 }
