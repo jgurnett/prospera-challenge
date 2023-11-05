@@ -1,10 +1,10 @@
-'use client'
 import * as React from 'react'
 import Accordion from '@mui/material/Accordion'
 import AccordionDetails from '@mui/material/AccordionDetails'
 import AccordionSummary from '@mui/material/AccordionSummary'
 import Typography from '@mui/material/Typography'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
+import prisma from '@/lib/prisma'
 
 interface ReviewInfo {
   movieTitle: string
@@ -13,34 +13,20 @@ interface ReviewInfo {
   review: string
 }
 
-export default function Reviews() {
-  const [expanded, setExpanded] = React.useState<string | false>(false)
-
-  const reviews: ReviewInfo[] = [
-    {
-      movieTitle: 'test',
-      dateWatched: new Date(),
-      rating: 4,
-      review: ' good movie',
-    },
-  ]
-
-  const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, isExpanded: boolean) => {
-      setExpanded(isExpanded ? panel : false)
-    }
+export default async function Reviews() {
+  const reviews = await prisma.review.findMany({ where: { userId: 1 } })
 
   return (
     <div>
       {reviews.map((review, index) => (
-        <Accordion key={index} onChange={handleChange('panel1')}>
+        <Accordion key={index}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
             <Typography sx={{ width: '33%', flexShrink: 0 }}>
-              {review.movieTitle}
+              {review.movieName}
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>
               {review.dateWatched.toDateString()}
