@@ -15,6 +15,7 @@ model users {
   image     String
   createdAt DateTime @default(now())
   reviews   review[]
+  applications application[]
 }
 
 model review {
@@ -29,4 +30,21 @@ model review {
   user        users     @relation(fields: [userId], references: [id])
 
   @@unique([movieName, dateWatched])
+}
+
+model application {
+  id          Int       @id @default(autoincrement())
+  companyName String
+  name        String
+  birthDate   DateTime?
+  phoneNumber String?
+  createdTs   DateTime  @default(now())
+  updatedTs   DateTime? @updatedAt
+  approved    Boolean @default(false)
+  submitted   Boolean @default(false)
+  
+  userId      Int
+  user        users     @relation(fields: [userId], references: [id])
+
+  @@unique([companyName])
 }

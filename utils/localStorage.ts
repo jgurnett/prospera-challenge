@@ -1,5 +1,6 @@
 export enum LocalStorageKeys {
   MOVIE_DATA = 'movieData',
+  APPLICATION_DATA = 'applicationData',
 }
 
 export function saveData(key: LocalStorageKeys, data: object) {

@@ -13,7 +13,6 @@ export default function Step3() {
       router.push(DashboardRoutes.STEP1)
     }
     setId(results.id)
-    console.log(results)
   }, [])
 
   const [review, setReview] = useState('')

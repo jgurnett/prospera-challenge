@@ -6,19 +6,14 @@ import Typography from '@mui/material/Typography'
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore'
 import prisma from '@/lib/prisma'
 
-interface ReviewInfo {
-  movieTitle: string
-  dateWatched: Date
-  rating: number
-  review: string
-}
-
-export default async function Reviews() {
-  const reviews = await prisma.review.findMany({ where: { userId: 1 } })
+export default async function Applications() {
+  const applications = await prisma.application.findMany({
+    where: { userId: 1 },
+  })
 
   return (
     <div>
-      {reviews.map((review, index) => (
+      {applications.map((application, index) => (
         <Accordion key={index}>
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
@@ -26,21 +21,29 @@ export default async function Reviews() {
             id="panel1bh-header"
           >
             <Typography sx={{ width: '33%', flexShrink: 0 }}>
-              {review.movieName}
-            </Typography>
-            <Typography sx={{ color: 'text.secondary' }}>
-              {review.dateWatched?.toDateString()}
+              {application.companyName}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
             <p>
-              <b>Rating:</b> {review.rating} out of 5 stars.
+              <b>Your name:</b> {application.name}
             </p>
+            {application?.phoneNumber ? (
+              <p>
+                <b>Your phone number:</b> {application.phoneNumber}
+              </p>
+            ) : null}
+            {application?.birthDate ? (
+              <p>
+                <b>Your birthday:</b> {application.birthDate.toDateString()}
+              </p>
+            ) : null}
             <br />
-            <p>
-              <b>Review:</b>
-              {review.review}
-            </p>
+            {application?.approved ? (
+              <p>Approved!</p>
+            ) : (
+              <p>Awaiting approval</p>
+            )}
           </AccordionDetails>
         </Accordion>
       ))}

@@ -7,19 +7,17 @@ export default function FormLayout({
 }: {
   children: React.ReactNode
 }) {
-  const baseRoute = `/${DashboardRoutes.DASHBOARD}/${DashboardRoutes.FORM}/`
+  const baseRoute = `/${DashboardRoutes.DASHBOARD}/${DashboardRoutes.APPLICATION_FORM}/`
   const links = [
-    { name: 'Movie name', route: DashboardRoutes.STEP1 },
-    { name: 'Rating', route: DashboardRoutes.STEP2 },
-    { name: 'Review', route: DashboardRoutes.STEP3 },
+    { name: 'Name', route: DashboardRoutes.STEP1 },
+    { name: 'Birthday', route: DashboardRoutes.STEP2 },
+    { name: 'Phone', route: DashboardRoutes.STEP3 },
   ]
   return (
     <section className="flex flex-col items-center">
       <Navigation links={links} baseRoute={baseRoute} />
       <br />
-      <Card className="p-8" style={{ minWidth: '450px' }}>
-        {children}
-      </Card>
+      <Card className="p-8 w-full md:w-96">{children}</Card>
     </section>
   )
 }

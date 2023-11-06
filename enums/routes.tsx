@@ -1,5 +1,8 @@
 export enum DashboardRoutes {
   DASHBOARD = 'dashboard',
+  APPLICATION_FORM = 'applicationForm',
+  APPLICATIONS = 'applications',
+  REVIEW = 'review',
   FORM = 'form',
   REVIEWS = 'reviews',
   STEP1 = 'step1',
