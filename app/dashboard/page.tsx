@@ -8,7 +8,9 @@ export default function Home() {
 
   useEffect(() => {
     // Perform automatic redirection when the component loads
-    router.push(`${DashboardRoutes.DASHBOARD}/${DashboardRoutes.FORM}`)
+    router.push(
+      `${DashboardRoutes.DASHBOARD}/${DashboardRoutes.APPLICATION_FORM}`,
+    )
   }, [])
 
   return <div></div>

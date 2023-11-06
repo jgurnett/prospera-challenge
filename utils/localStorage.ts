@@ -12,6 +12,11 @@ export function getData(key: LocalStorageKeys) {
   return storedData ? JSON.parse(storedData) : ''
 }
 
+export function updateData(key: LocalStorageKeys, data: object) {
+  const storedData = getData(key)
+  return saveData(key, { ...storedData, ...data })
+}
+
 export function removeData(key: LocalStorageKeys) {
   localStorage.removeItem(key)
 }

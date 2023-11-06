@@ -1,20 +1,28 @@
 'use client'
 import { DashboardRoutes } from '@/enums/routes'
-import { useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import { Button, TextField } from '@mui/material'
-import { DatePicker } from '@mui/lab'
-import AdapterDateFns from '@mui/lab/AdapterDateFns'
-import LocalizationProvider from '@mui/lab/LocalizationProvider'
 import { useRouter } from 'next/navigation'
-import { LocalStorageKeys, saveData } from '@/utils/localStorage'
+import { LocalStorageKeys, getData, saveData } from '@/utils/localStorage'
 import { MovieData } from '@/interfaces/movieData'
 import Loading from '@/components/loading'
+import { resourceLimits } from 'worker_threads'
 
 export default function Step1() {
   const [companyName, setCompanyName] = useState('')
   const [isLoading, setIsLoading] = useState(false)
+  const [id, setId] = useState()
   const [name, setName] = useState('')
   const router = useRouter()
+
+  useEffect(() => {
+    const results = getData(LocalStorageKeys.APPLICATION_DATA)
+    if (results) {
+      setCompanyName(results?.companyName)
+      setName(results?.name)
+      setId(results.id)
+    }
+  }, [])
 
   async function nextStep() {
     setIsLoading(true)
@@ -36,13 +44,15 @@ export default function Step1() {
   async function submitData(): Promise<MovieData | undefined> {
     try {
       const body = {
+        id,
         userId: 1,
         companyName,
         name,
       }
 
+      const method = id ? 'PUT' : 'POST'
       const response = await fetch('/api/application', {
-        method: 'POST',
+        method,
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body),
       })
@@ -57,6 +67,14 @@ export default function Step1() {
     }
   }
 
+  function handleCompanyNameChange(event: ChangeEvent<HTMLInputElement>) {
+    setCompanyName(event.target.value)
+  }
+
+  function handleNameChange(event: ChangeEvent<HTMLInputElement>) {
+    setName(event.target.value)
+  }
+
   return (
     <div>
       <Loading isLoading={isLoading} />
@@ -64,13 +82,15 @@ export default function Step1() {
         <p className="pb-2">What company are you applying to?</p>
         <TextField
           label="Company"
-          onChange={(newValue) => setCompanyName(newValue.target.value)}
+          value={companyName}
+          onChange={handleCompanyNameChange}
         />
         <br />
         <p className="pb-2">What is your Name?</p>
         <TextField
           label="First Name"
-          onChange={(newValue) => setName(newValue.target.value)}
+          value={name}
+          onChange={handleNameChange}
         />
       </div>
       <br />

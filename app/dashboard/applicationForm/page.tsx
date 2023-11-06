@@ -1,18 +1,68 @@
 'use client'
 import { DashboardRoutes } from '@/enums/routes'
+import { getData, LocalStorageKeys, removeData } from '@/utils/localStorage'
 import { Button } from '@mui/material'
+import { useRouter } from 'next/navigation'
+import { useEffect, useState } from 'react'
 
-export default function Form() {
+interface ComponentText {
+  body: string
+  button: string
+}
+
+export default function ApplicationForm() {
+  const [resume, setResume] = useState(false)
+  const [componentText, setComponentText] = useState<ComponentText>({
+    body: 'You have made it to the application flow!',
+    button: 'Start application!',
+  })
+  const router = useRouter()
+
+  useEffect(() => {
+    const results = getData(LocalStorageKeys.APPLICATION_DATA)
+    const enableContinue = results?.id ? true : false
+    setResume(enableContinue)
+
+    const componentText = {
+      body: enableContinue
+        ? 'You already have an application in the works, would you like to continue?'
+        : 'You have made it to the application flow!',
+      button: enableContinue ? 'Continue application!' : 'Start application!',
+    }
+    setComponentText(componentText)
+  }, [])
+
+  function startNew() {
+    removeData(LocalStorageKeys.APPLICATION_DATA)
+    nextStep()
+  }
+
+  function nextStep() {
+    router.push(DashboardRoutes.APPLICATION_FORM + '/' + DashboardRoutes.STEP1)
+  }
+
   return (
     <div>
-      <p>You have made it to the application flow!</p>
+      <p>{componentText?.body}</p>
       <br />
-      <Button
-        variant="contained"
-        href={DashboardRoutes.APPLICATION_FORM + '/' + DashboardRoutes.STEP1}
-      >
-        Start application!
-      </Button>
+      <div className="flex text-center gap-2">
+        {resume ? (
+          <Button
+            variant="contained"
+            style={{ backgroundColor: '#e65100' }}
+            onClick={startNew}
+          >
+            New Application
+          </Button>
+        ) : null}
+        <Button
+          variant="contained"
+          style={{ backgroundColor: '#1A76D2' }}
+          onClick={nextStep}
+        >
+          {componentText?.button}
+        </Button>
+      </div>
     </div>
   )
 }

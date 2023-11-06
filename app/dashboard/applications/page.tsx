@@ -8,7 +8,7 @@ import prisma from '@/lib/prisma'
 
 export default async function Applications() {
   const applications = await prisma.application.findMany({
-    where: { userId: 1 },
+    where: { userId: 1, submitted: true },
   })
 
   return (
@@ -20,9 +20,14 @@ export default async function Applications() {
             aria-controls="panel1bh-content"
             id="panel1bh-header"
           >
-            <Typography sx={{ width: '33%', flexShrink: 0 }}>
+            <Typography sx={{ width: '60%', flexShrink: 0 }}>
               {application.companyName}
             </Typography>
+            {application?.approved ? (
+              <p>Approved!</p>
+            ) : (
+              <p>Awaiting approval</p>
+            )}
           </AccordionSummary>
           <AccordionDetails>
             <p>
@@ -38,12 +43,6 @@ export default async function Applications() {
                 <b>Your birthday:</b> {application.birthDate.toDateString()}
               </p>
             ) : null}
-            <br />
-            {application?.approved ? (
-              <p>Approved!</p>
-            ) : (
-              <p>Awaiting approval</p>
-            )}
           </AccordionDetails>
         </Accordion>
       ))}
