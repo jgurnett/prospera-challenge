@@ -29,7 +29,7 @@ export default async function Reviews() {
               {review.movieName}
             </Typography>
             <Typography sx={{ color: 'text.secondary' }}>
-              {review.dateWatched.toDateString()}
+              {review.dateWatched?.toDateString()}
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
