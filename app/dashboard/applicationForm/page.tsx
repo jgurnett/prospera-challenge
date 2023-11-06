@@ -5,13 +5,13 @@ import { Button } from '@mui/material'
 export default function Form() {
   return (
     <div>
-      <p>Lets add a movie review</p>
+      <p>You have made it to the application flow!</p>
       <br />
       <Button
         variant="contained"
-        href={DashboardRoutes.FORM + '/' + DashboardRoutes.STEP1}
+        href={DashboardRoutes.APPLICATION_FORM + '/' + DashboardRoutes.STEP1}
       >
-        Start review!
+        Start application!
       </Button>
     </div>
   )

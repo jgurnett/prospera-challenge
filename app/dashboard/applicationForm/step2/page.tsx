@@ -10,7 +10,7 @@ import { useEffect, useState } from 'react'
 
 export default function Step2() {
   useEffect(() => {
-    const results = getData(LocalStorageKeys.MOVIE_DATA)
+    const results = getData(LocalStorageKeys.APPLICATION_DATA)
     if (!results?.id) {
       alert('Going back to step 1')
       router.push(DashboardRoutes.STEP1)
@@ -18,7 +18,7 @@ export default function Step2() {
     setId(results.id)
   }, [])
 
-  const [date, setDate] = useState('')
+  const [birthDate, setDate] = useState('')
   function handleDateChange(date: string) {
     setDate(date)
   }
@@ -34,7 +34,7 @@ export default function Step2() {
     try {
       const body = {
         id,
-        birthDate: date,
+        birthDate,
       }
       await fetch(`/api/application`, {
         method: 'PUT',
@@ -52,7 +52,7 @@ export default function Step2() {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
           <DatePicker
             label="Select Date"
-            value={date}
+            value={birthDate}
             renderInput={(props) => <TextField {...props} />}
             onChange={(newDate: string | null) =>
               handleDateChange(newDate || '')

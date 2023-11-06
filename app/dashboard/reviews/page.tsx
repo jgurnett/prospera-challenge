@@ -33,9 +33,14 @@ export default async function Reviews() {
             </Typography>
           </AccordionSummary>
           <AccordionDetails>
-            <p>Rating: {review.rating} out of 5 stars.</p>
+            <p>
+              <b>Rating:</b> {review.rating} out of 5 stars.
+            </p>
             <br />
-            <Typography>Review:{review.review}</Typography>
+            <p>
+              <b>Review:</b>
+              {review.review}
+            </p>
           </AccordionDetails>
         </Accordion>
       ))}

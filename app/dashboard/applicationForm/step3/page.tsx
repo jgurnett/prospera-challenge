@@ -1,9 +1,9 @@
 'use client'
 import { DashboardRoutes } from '@/enums/routes'
-import { LocalStorageKeys, removeData } from '@/utils/localStorage'
+import { LocalStorageKeys, getData, removeData } from '@/utils/localStorage'
 import { Button, Input } from '@mui/material'
 import { useRouter } from 'next/navigation'
-import React, { ChangeEvent } from 'react'
+import React, { ChangeEvent, useEffect } from 'react'
 import { useState } from 'react'
 import { IMaskInput } from 'react-imask'
 
@@ -33,15 +33,14 @@ const TextMaskCustom = React.forwardRef<HTMLInputElement, CustomProps>(
 )
 
 export default function Step3() {
-  // useEffect(() => {
-  //   const results = getData(LocalStorageKeys.MOVIE_DATA)
-  //   if (!results?.id) {
-  //     alert('Going back to step 1')
-  //     router.push(DashboardRoutes.STEP1)
-  //   }
-  //   setId(results.id)
-  //   console.log(results)
-  // }, [])
+  useEffect(() => {
+    const results = getData(LocalStorageKeys.APPLICATION_DATA)
+    if (!results?.id) {
+      alert('Going back to step 1')
+      router.push(DashboardRoutes.STEP1)
+    }
+    setId(results.id)
+  }, [])
 
   const [phoneNumber, setPhoneNumber] = useState('')
   const [id, setId] = useState()
@@ -53,8 +52,7 @@ export default function Step3() {
 
   async function nextStep() {
     await submitData()
-    removeData(LocalStorageKeys.MOVIE_DATA)
-    router.push(`/${DashboardRoutes.DASHBOARD}/${DashboardRoutes.REVIEWS}`)
+    router.push(`${DashboardRoutes.REVIEW}`)
   }
 
   async function submitData() {
@@ -90,7 +88,7 @@ export default function Step3() {
         style={{ backgroundColor: '#1A76D2' }}
         onClick={nextStep}
       >
-        Done
+        Review
       </Button>
     </div>
   )
