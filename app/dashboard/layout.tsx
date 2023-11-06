@@ -6,19 +6,18 @@ import CssBaseline from '@mui/material/CssBaseline'
 import Divider from '@mui/material/Divider'
 import Drawer from '@mui/material/Drawer'
 import IconButton from '@mui/material/IconButton'
-import InboxIcon from '@mui/icons-material/MoveToInbox'
 import List from '@mui/material/List'
 import ListItem from '@mui/material/ListItem'
 import ListItemButton from '@mui/material/ListItemButton'
 import ListItemIcon from '@mui/material/ListItemIcon'
 import ListItemText from '@mui/material/ListItemText'
-import MailIcon from '@mui/icons-material/Mail'
 import MenuIcon from '@mui/icons-material/Menu'
 import Toolbar from '@mui/material/Toolbar'
 import Typography from '@mui/material/Typography'
 import { DashboardRoutes } from '@/enums/routes'
 import MovieCreationIcon from '@mui/icons-material/MovieCreation'
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline'
+import DescriptionIcon from '@mui/icons-material/Description'
 
 const drawerWidth = 240
 
@@ -41,6 +40,19 @@ export default function ResponsiveDrawer({
 
   const sidebarList: SidebarInfo[] = [
     {
+      name: 'New Application',
+      link: `/${DashboardRoutes.DASHBOARD}/${DashboardRoutes.APPLICATION_FORM}`,
+      icon: <AddCircleOutlineIcon />,
+    },
+    {
+      name: 'Application',
+      link: `/${DashboardRoutes.DASHBOARD}/${DashboardRoutes.APPLICATIONS}`,
+      icon: <DescriptionIcon />,
+    },
+  ]
+
+  const extraList: SidebarInfo[] = [
+    {
       name: 'New Review',
       link: `/${DashboardRoutes.DASHBOARD}/${DashboardRoutes.FORM}`,
       icon: <AddCircleOutlineIcon />,
@@ -55,13 +67,24 @@ export default function ResponsiveDrawer({
   const drawer = (
     <div>
       <Toolbar />
-      <Divider />
       <List>
         {sidebarList.map((sidebarInfo) => (
           <ListItem key={sidebarInfo.name} disablePadding>
             <ListItemButton href={sidebarInfo.link}>
               <ListItemIcon>{sidebarInfo.icon}</ListItemIcon>
               <ListItemText primary={sidebarInfo.name} />
+            </ListItemButton>
+          </ListItem>
+        ))}
+      </List>
+      <Divider />
+      <p className="p-4">Extras</p>
+      <List>
+        {extraList.map((extraInfo) => (
+          <ListItem key={extraInfo.name} disablePadding>
+            <ListItemButton href={extraInfo.link}>
+              <ListItemIcon>{extraInfo.icon}</ListItemIcon>
+              <ListItemText primary={extraInfo.name} />
             </ListItemButton>
           </ListItem>
         ))}
