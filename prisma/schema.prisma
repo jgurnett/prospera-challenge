@@ -40,6 +40,8 @@ model application {
   phoneNumber String?
   createdTs   DateTime  @default(now())
   updatedTs   DateTime? @updatedAt
+  approved    Boolean @default(false)
+  submitted   Boolean @default(false)
   
   userId      Int
   user        users     @relation(fields: [userId], references: [id])
