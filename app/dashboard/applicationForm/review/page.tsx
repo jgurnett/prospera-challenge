@@ -16,11 +16,9 @@ export default function Review() {
     }
     setApplication(results)
     console.log(results)
-    setApplicationsToDisplay(Object.values(results))
   }, [])
 
   const [application, setApplication] = useState<ApplicationData>()
-  const [applicationsToDisplay, setApplicationsToDisplay] = useState([])
 
   const router = useRouter()
 
@@ -51,11 +49,22 @@ export default function Review() {
   }
   return (
     <div>
-      <ul>
-        {applicationsToDisplay.map((value, index) => (
-          <li key={index}>{value}</li>
-        ))}
-      </ul>
+      <p>
+        <b>Company name: </b>
+        {application?.companyName}
+      </p>
+      <p>
+        <b>Your name: </b>
+        {application?.name}
+      </p>
+      <p>
+        <b>Birthday: </b>
+        {new Date(application?.birthDate || '').toDateString()}
+      </p>
+      <p>
+        <b>Phone number: </b>
+        {application?.phoneNumber}
+      </p>
 
       <br />
       <Button

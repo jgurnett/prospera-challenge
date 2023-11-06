@@ -40,12 +40,12 @@ export default function ResponsiveDrawer({
 
   const sidebarList: SidebarInfo[] = [
     {
-      name: 'New Application',
+      name: 'Submit application',
       link: `/${DashboardRoutes.DASHBOARD}/${DashboardRoutes.APPLICATION_FORM}`,
       icon: <AddCircleOutlineIcon />,
     },
     {
-      name: 'Application',
+      name: 'Applications',
       link: `/${DashboardRoutes.DASHBOARD}/${DashboardRoutes.APPLICATIONS}`,
       icon: <DescriptionIcon />,
     },
@@ -53,7 +53,7 @@ export default function ResponsiveDrawer({
 
   const extraList: SidebarInfo[] = [
     {
-      name: 'New Review',
+      name: 'New review',
       link: `/${DashboardRoutes.DASHBOARD}/${DashboardRoutes.FORM}`,
       icon: <AddCircleOutlineIcon />,
     },

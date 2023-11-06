@@ -1,7 +1,8 @@
 'use client'
+import Loading from '@/components/loading'
 import { DashboardRoutes } from '@/enums/routes'
-import { LocalStorageKeys, getData, removeData } from '@/utils/localStorage'
-import { Button, Input } from '@mui/material'
+import { LocalStorageKeys, getData, updateData } from '@/utils/localStorage'
+import { Button, Input, OutlinedInput } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import React, { ChangeEvent, useEffect } from 'react'
 import { useState } from 'react'
@@ -33,18 +34,20 @@ const TextMaskCustom = React.forwardRef<HTMLInputElement, CustomProps>(
 )
 
 export default function Step3() {
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [id, setId] = useState()
+  const [isLoading, setIsLoading] = useState(false)
+  const router = useRouter()
+
   useEffect(() => {
     const results = getData(LocalStorageKeys.APPLICATION_DATA)
     if (!results?.id) {
-      alert('Going back to step 1')
+      alert('Missing first data, navigating back to step 1')
       router.push(DashboardRoutes.STEP1)
     }
     setId(results.id)
+    setPhoneNumber(results?.phoneNumber)
   }, [])
-
-  const [phoneNumber, setPhoneNumber] = useState('')
-  const [id, setId] = useState()
-  const router = useRouter()
 
   function updatePhoneNumber(event: ChangeEvent<HTMLInputElement>) {
     setPhoneNumber(event.target.value)
@@ -52,10 +55,12 @@ export default function Step3() {
 
   async function nextStep() {
     await submitData()
+    updateData(LocalStorageKeys.APPLICATION_DATA, { phoneNumber })
     router.push(`${DashboardRoutes.REVIEW}`)
   }
 
   async function submitData() {
+    setIsLoading(true)
     try {
       const body = {
         id,
@@ -68,13 +73,16 @@ export default function Step3() {
       })
     } catch (error) {
       console.error(error)
+    } finally {
+      setIsLoading(false)
     }
   }
   return (
-    <div>
+    <div className="flex flex-col w-full">
+      <Loading isLoading={isLoading} />
       <h1>Enter your phone number</h1>
-      <div>
-        <Input
+      <div className="flex flex-col">
+        <OutlinedInput
           value={phoneNumber}
           onChange={updatePhoneNumber}
           name="textmask"
