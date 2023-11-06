@@ -1,42 +1,73 @@
-"use client"
-import { Visibility, VisibilityOff } from '@mui/icons-material';
-import { Button, IconButton, InputAdornment, OutlinedInput, TextField } from '@mui/material';
-import { useRouter } from 'next/navigation';
-import React, { useState } from 'react';
+'use client'
+import { DashboardRoutes } from '@/enums/routes'
+import { Visibility, VisibilityOff } from '@mui/icons-material'
+import {
+  Button,
+  CircularProgress,
+  IconButton,
+  InputAdornment,
+  OutlinedInput,
+  TextField,
+} from '@mui/material'
+import { useRouter } from 'next/navigation'
+import React, { ChangeEvent, useState } from 'react'
+import Loading from './loading'
 
 export default function LoginForm() {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [showPassword, setShowPassword] = React.useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = React.useState(false)
+  const [isLoading, setIsLoading] = useState(false)
+  const [isValid, setIsValid] = useState(true)
 
-  const router = useRouter();
+  const router = useRouter()
 
-  const handleLogin = () => {
+  function handleLogin() {
     // TODO - add actual auth
-    setIsAuthenticated(true);
-    router.push('/');
-  };
+    setIsLoading(true)
+    if (!isValid || password.length < 1) {
+      alert('Some info is incorrect')
+      return
+    }
+    setTimeout(() => {
+      setIsLoading(false)
+      router.push(`/${DashboardRoutes.DASHBOARD}`)
+    }, 1000)
+  }
 
-  const handleClickShowPassword = () => setShowPassword((show) => !show);
-    
-  const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event.preventDefault();
-  };
+  function handleClickShowPassword() {
+    setShowPassword((show) => !show)
+  }
 
+  function handleMouseDownPassword(event: React.MouseEvent<HTMLButtonElement>) {
+    event.preventDefault()
+  }
 
+  const handleEmailChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const newEmail = event.target.value
+    setEmail(newEmail)
+
+    // Regular expression for basic email validation
+    const emailPattern = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+    const isValidEmail = emailPattern.test(newEmail)
+    setIsValid(isValidEmail)
+  }
 
   return (
     <div>
-      <form onSubmit={handleLogin} className="child-padding">
-        <div>
-           <TextField
+      <Loading isLoading={isLoading} />
+      <form onSubmit={handleLogin} className="flex flex-col w-full">
+        <div className="py-4 flex flex-col">
+          <TextField
             placeholder="Email"
-            value={email} onChange={(e) => setEmail(e.target.value)}
+            value={email}
+            onChange={handleEmailChange}
+            error={!isValid}
+            helperText={!isValid ? 'Invalid email format' : ''}
           />
         </div>
-        <div>
-           <OutlinedInput
+        <div className="pb-4 flex flex-col">
+          <OutlinedInput
             id="outlined-adornment-password"
             type={showPassword ? 'text' : 'password'}
             endAdornment={
@@ -51,16 +82,19 @@ export default function LoginForm() {
                 </IconButton>
               </InputAdornment>
             }
-            label="Password"
+            placeholder="Password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
         </div>
-        <Button variant="contained" onClick={handleLogin} >Login</Button>
+        <Button
+          variant="contained"
+          style={{ backgroundColor: '#1A76D2' }}
+          onClick={handleLogin}
+        >
+          Login
+        </Button>
       </form>
-      {isAuthenticated && <p>You are logged in!</p>}
     </div>
-  );
-};
-
-
+  )
+}

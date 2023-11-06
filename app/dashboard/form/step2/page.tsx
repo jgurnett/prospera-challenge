@@ -47,7 +47,11 @@ export default function Step2() {
         <StarRating onRatingChanged={setRating} />
       </div>
       <div>
-        <Button variant="contained" onClick={nextStep}>
+        <Button
+          variant="contained"
+          style={{ backgroundColor: '#1A76D2' }}
+          onClick={nextStep}
+        >
           Next
         </Button>
       </div>

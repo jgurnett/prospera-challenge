@@ -80,7 +80,11 @@ export default function Step1() {
 
       <br />
       <div className="flex justify-end">
-        <Button variant="contained" onClick={nextStep}>
+        <Button
+          variant="contained"
+          style={{ backgroundColor: '#1A76D2' }}
+          onClick={nextStep}
+        >
           Next
         </Button>
       </div>
