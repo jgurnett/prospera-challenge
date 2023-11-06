@@ -52,7 +52,11 @@ export default function Step3() {
         onChange={(event) => setReview(event.target.value)}
       />
       <br />
-      <Button variant="contained" onClick={nextStep}>
+      <Button
+        variant="contained"
+        style={{ backgroundColor: '#1A76D2' }}
+        onClick={nextStep}
+      >
         Done
       </Button>
     </div>

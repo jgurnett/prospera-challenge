@@ -10,7 +10,9 @@ export default function FormLayout({
     <section className="flex flex-col items-center">
       <Navigation />
       <br />
-      <Card className="p-8 m-w-1/2">{children}</Card>
+      <Card className="p-8" style={{ minWidth: '450px' }}>
+        {children}
+      </Card>
     </section>
   )
 }

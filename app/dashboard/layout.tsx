@@ -90,9 +90,7 @@ export default function ResponsiveDrawer({
           >
             <MenuIcon />
           </IconButton>
-          <Typography variant="h6" noWrap component="div">
-            Movie Reviews
-          </Typography>
+          <Typography variant="h6" noWrap component="div"></Typography>
         </Toolbar>
       </AppBar>
       <Box
