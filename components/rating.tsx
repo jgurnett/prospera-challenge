@@ -3,11 +3,16 @@ import React, { useState } from 'react'
 import StarOutlineIcon from '@mui/icons-material/StarOutline'
 import StarIcon from '@mui/icons-material/Star'
 
-export default function StarRating() {
+interface RatingProps {
+  onRatingChanged: (value: number) => void
+}
+
+export default function StarRating({ onRatingChanged }: RatingProps) {
   const [rating, setRating] = useState(0)
 
   const handleStarClick = (star: number) => {
     setRating(star)
+    onRatingChanged(star)
   }
 
   return (
