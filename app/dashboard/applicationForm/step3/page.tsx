@@ -42,7 +42,7 @@ export default function Step3() {
   useEffect(() => {
     const results = getData(LocalStorageKeys.APPLICATION_DATA)
     if (!results?.id) {
-      alert('Going back to step 1')
+      alert('Missing first data, navigating back to step 1')
       router.push(DashboardRoutes.STEP1)
     }
     setId(results.id)
