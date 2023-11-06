@@ -2,7 +2,7 @@
 import Loading from '@/components/loading'
 import { DashboardRoutes } from '@/enums/routes'
 import { LocalStorageKeys, getData, updateData } from '@/utils/localStorage'
-import { Button, Input, OutlinedInput } from '@mui/material'
+import { Button, OutlinedInput } from '@mui/material'
 import { useRouter } from 'next/navigation'
 import React, { ChangeEvent, useEffect } from 'react'
 import { useState } from 'react'
@@ -54,6 +54,10 @@ export default function Step3() {
   }
 
   async function nextStep() {
+    if (phoneNumber.length < 14) {
+      alert('please enter full phone number')
+      return
+    }
     await submitData()
     updateData(LocalStorageKeys.APPLICATION_DATA, { phoneNumber })
     router.push(`${DashboardRoutes.REVIEW}`)

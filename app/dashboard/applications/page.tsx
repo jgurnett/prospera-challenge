@@ -13,6 +13,7 @@ export default async function Applications() {
 
   return (
     <div>
+      <h1 className="pb-4">Your submitted applications are below.</h1>
       {applications.map((application, index) => (
         <Accordion key={index}>
           <AccordionSummary

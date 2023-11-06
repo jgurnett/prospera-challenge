@@ -6,12 +6,11 @@ import { useRouter } from 'next/navigation'
 import { LocalStorageKeys, getData, saveData } from '@/utils/localStorage'
 import { MovieData } from '@/interfaces/movieData'
 import Loading from '@/components/loading'
-import { resourceLimits } from 'worker_threads'
 
 export default function Step1() {
   const [companyName, setCompanyName] = useState('')
   const [isLoading, setIsLoading] = useState(false)
-  const [id, setId] = useState()
+  const [id, setId] = useState<number>()
   const [name, setName] = useState('')
   const router = useRouter()
 
@@ -25,15 +24,21 @@ export default function Step1() {
   }, [])
 
   async function nextStep() {
+    if (companyName.length < 1 || name.length < 1) {
+      alert('please fill out fields')
+      return
+    }
     setIsLoading(true)
     const results = await submitData()
     if (!results) {
       // TODO - change to toasts
       alert('failed to save')
+      setIsLoading(false)
       return
     }
+    const currentId = id ? id : results.id
     saveData(LocalStorageKeys.APPLICATION_DATA, {
-      id: results.id,
+      id: currentId,
       companyName,
       name,
     })
