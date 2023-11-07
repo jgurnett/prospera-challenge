@@ -26,9 +26,11 @@ export default function LoginForm() {
     // TODO - add actual auth
     setIsLoading(true)
     if (!isValid || password.length < 1) {
+      setIsLoading(false)
       alert('Some info is incorrect')
       return
     }
+
     setTimeout(() => {
       setIsLoading(false)
       router.push(`/${DashboardRoutes.DASHBOARD}`)
