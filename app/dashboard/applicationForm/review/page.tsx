@@ -15,7 +15,6 @@ export default function Review() {
       router.push(DashboardRoutes.STEP1)
     }
     setApplication(results)
-    console.log(results)
   }, [])
 
   const [application, setApplication] = useState<ApplicationData>()
