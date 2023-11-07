@@ -3,7 +3,6 @@ import { DashboardRoutes } from '@/enums/routes'
 import { Visibility, VisibilityOff } from '@mui/icons-material'
 import {
   Button,
-  CircularProgress,
   IconButton,
   InputAdornment,
   OutlinedInput,
@@ -12,6 +11,7 @@ import {
 import { useRouter } from 'next/navigation'
 import React, { ChangeEvent, useState } from 'react'
 import Loading from './loading'
+import AlertService from '@/services/alertService'
 
 export default function LoginForm() {
   const [email, setEmail] = useState('')
@@ -21,13 +21,15 @@ export default function LoginForm() {
   const [isValid, setIsValid] = useState(true)
 
   const router = useRouter()
+  const alertService = AlertService()
 
   function handleLogin() {
     // TODO - add actual auth
     setIsLoading(true)
     if (!isValid || password.length < 1) {
       setIsLoading(false)
-      alert('Some info is incorrect')
+      alert('some info is incorrect')
+      // alertService.showAlert('some info is incorrect', 'error')
       return
     }
 
@@ -97,6 +99,7 @@ export default function LoginForm() {
           Login
         </Button>
       </form>
+      {/* {alertService.AlertComponent} */}
     </div>
   )
 }
